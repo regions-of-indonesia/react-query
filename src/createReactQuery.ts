@@ -31,19 +31,19 @@ function createReactQuery(client: RegionsOfIndonesiaClient = new RegionsOfIndone
 
   const fetcher = {
     provinces: async () => await client.province.find(),
-    province: async (ctx: Ctx<[string, string]>) => await client.province.findByCode(ctx.queryKey[1]),
-    districts: async (ctx: Ctx<[string, string]>) => await client.district.findByProvinceCode(ctx.queryKey[1]),
-    district: async (ctx: Ctx<[string, string]>) => await client.district.findByCode(ctx.queryKey[1]),
-    subdistricts: async (ctx: Ctx<[string, string]>) => await client.subdistrict.findByDistrictCode(ctx.queryKey[1]),
-    subdistrict: async (ctx: Ctx<[string, string]>) => await client.subdistrict.findByCode(ctx.queryKey[1]),
-    villages: async (ctx: Ctx<[string, string]>) => await client.village.findBySubdistrictCode(ctx.queryKey[1]),
-    village: async (ctx: Ctx<[string, string]>) => await client.village.findByCode(ctx.queryKey[1]),
+    province: async (ctx: Ctx<[string, string]>) => (ctx ? await client.province.findByCode(ctx.queryKey[1]) : undefined),
+    districts: async (ctx: Ctx<[string, string]>) => (ctx ? await client.district.findByProvinceCode(ctx.queryKey[1]) : undefined),
+    district: async (ctx: Ctx<[string, string]>) => (ctx ? await client.district.findByCode(ctx.queryKey[1]) : undefined),
+    subdistricts: async (ctx: Ctx<[string, string]>) => (ctx ? await client.subdistrict.findByDistrictCode(ctx.queryKey[1]) : undefined),
+    subdistrict: async (ctx: Ctx<[string, string]>) => (ctx ? await client.subdistrict.findByCode(ctx.queryKey[1]) : undefined),
+    villages: async (ctx: Ctx<[string, string]>) => (ctx ? await client.village.findBySubdistrictCode(ctx.queryKey[1]) : undefined),
+    village: async (ctx: Ctx<[string, string]>) => (ctx ? await client.village.findByCode(ctx.queryKey[1]) : undefined),
 
-    search: async (ctx: Ctx<[string, string]>) => await client.search(ctx.queryKey[1]),
-    searchProvinces: async (ctx: Ctx<[string, string]>) => await client.province.search(ctx.queryKey[1]),
-    searchDistricts: async (ctx: Ctx<[string, string]>) => await client.district.search(ctx.queryKey[1]),
-    searchSubdistricts: async (ctx: Ctx<[string, string]>) => await client.subdistrict.search(ctx.queryKey[1]),
-    searchVillages: async (ctx: Ctx<[string, string]>) => await client.village.search(ctx.queryKey[1]),
+    search: async (ctx: Ctx<[string, string]>) => (ctx ? await client.search(ctx.queryKey[1]) : undefined),
+    searchProvinces: async (ctx: Ctx<[string, string]>) => (ctx ? await client.province.search(ctx.queryKey[1]) : undefined),
+    searchDistricts: async (ctx: Ctx<[string, string]>) => (ctx ? await client.district.search(ctx.queryKey[1]) : undefined),
+    searchSubdistricts: async (ctx: Ctx<[string, string]>) => (ctx ? await client.subdistrict.search(ctx.queryKey[1]) : undefined),
+    searchVillages: async (ctx: Ctx<[string, string]>) => (ctx ? await client.village.search(ctx.queryKey[1]) : undefined),
   };
 
   return {
