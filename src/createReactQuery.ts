@@ -8,7 +8,11 @@ function isNotEmptyString(value: unknown): value is string {
 }
 
 function createCallbackIfNotEmptyStringOrNull<T>(value: unknown, callback: (value: string) => T) {
-  return isNotEmptyString(value) ? callback(value) : null;
+  return isNotEmptyString(value) ? callback(value) : [];
+}
+
+function isValidTextOrCodeFromContext(ctx: Ctx<[string, string], any>) {
+  return typeof ctx.queryKey[1] === "string" && ctx.queryKey[1] !== "";
 }
 
 function createReactQuery(client: RegionsOfIndonesiaClient = new RegionsOfIndonesiaClient()) {
@@ -31,19 +35,30 @@ function createReactQuery(client: RegionsOfIndonesiaClient = new RegionsOfIndone
 
   const fetcher = {
     provinces: async () => await client.province.find(),
-    province: async (ctx: Ctx<[string, string]>) => (ctx ? await client.province.findByCode(ctx.queryKey[1]) : undefined),
-    districts: async (ctx: Ctx<[string, string]>) => (ctx ? await client.district.findByProvinceCode(ctx.queryKey[1]) : undefined),
-    district: async (ctx: Ctx<[string, string]>) => (ctx ? await client.district.findByCode(ctx.queryKey[1]) : undefined),
-    subdistricts: async (ctx: Ctx<[string, string]>) => (ctx ? await client.subdistrict.findByDistrictCode(ctx.queryKey[1]) : undefined),
-    subdistrict: async (ctx: Ctx<[string, string]>) => (ctx ? await client.subdistrict.findByCode(ctx.queryKey[1]) : undefined),
-    villages: async (ctx: Ctx<[string, string]>) => (ctx ? await client.village.findBySubdistrictCode(ctx.queryKey[1]) : undefined),
-    village: async (ctx: Ctx<[string, string]>) => (ctx ? await client.village.findByCode(ctx.queryKey[1]) : undefined),
+    province: async (ctx: Ctx<[string, string]>) =>
+      isValidTextOrCodeFromContext(ctx) ? await client.province.findByCode(ctx.queryKey[1]) : undefined,
+    districts: async (ctx: Ctx<[string, string]>) =>
+      isValidTextOrCodeFromContext(ctx) ? await client.district.findByProvinceCode(ctx.queryKey[1]) : undefined,
+    district: async (ctx: Ctx<[string, string]>) =>
+      isValidTextOrCodeFromContext(ctx) ? await client.district.findByCode(ctx.queryKey[1]) : undefined,
+    subdistricts: async (ctx: Ctx<[string, string]>) =>
+      isValidTextOrCodeFromContext(ctx) ? await client.subdistrict.findByDistrictCode(ctx.queryKey[1]) : undefined,
+    subdistrict: async (ctx: Ctx<[string, string]>) =>
+      isValidTextOrCodeFromContext(ctx) ? await client.subdistrict.findByCode(ctx.queryKey[1]) : undefined,
+    villages: async (ctx: Ctx<[string, string]>) =>
+      isValidTextOrCodeFromContext(ctx) ? await client.village.findBySubdistrictCode(ctx.queryKey[1]) : undefined,
+    village: async (ctx: Ctx<[string, string]>) =>
+      isValidTextOrCodeFromContext(ctx) ? await client.village.findByCode(ctx.queryKey[1]) : undefined,
 
-    search: async (ctx: Ctx<[string, string]>) => (ctx ? await client.search(ctx.queryKey[1]) : undefined),
-    searchProvinces: async (ctx: Ctx<[string, string]>) => (ctx ? await client.province.search(ctx.queryKey[1]) : undefined),
-    searchDistricts: async (ctx: Ctx<[string, string]>) => (ctx ? await client.district.search(ctx.queryKey[1]) : undefined),
-    searchSubdistricts: async (ctx: Ctx<[string, string]>) => (ctx ? await client.subdistrict.search(ctx.queryKey[1]) : undefined),
-    searchVillages: async (ctx: Ctx<[string, string]>) => (ctx ? await client.village.search(ctx.queryKey[1]) : undefined),
+    search: async (ctx: Ctx<[string, string]>) => (isValidTextOrCodeFromContext(ctx) ? await client.search(ctx.queryKey[1]) : undefined),
+    searchProvinces: async (ctx: Ctx<[string, string]>) =>
+      isValidTextOrCodeFromContext(ctx) ? await client.province.search(ctx.queryKey[1]) : undefined,
+    searchDistricts: async (ctx: Ctx<[string, string]>) =>
+      isValidTextOrCodeFromContext(ctx) ? await client.district.search(ctx.queryKey[1]) : undefined,
+    searchSubdistricts: async (ctx: Ctx<[string, string]>) =>
+      isValidTextOrCodeFromContext(ctx) ? await client.subdistrict.search(ctx.queryKey[1]) : undefined,
+    searchVillages: async (ctx: Ctx<[string, string]>) =>
+      isValidTextOrCodeFromContext(ctx) ? await client.village.search(ctx.queryKey[1]) : undefined,
   };
 
   return {
