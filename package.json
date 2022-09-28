@@ -20,7 +20,7 @@
     "test:dev": "vitest --ui",
     "test:prod": "vitest run",
     "test": "yarn run test:prod",
-    "build": "rimraf dist && microbundle src/index.ts --format esm,cjs --sourcemap false --external @tanstack/react-query",
+    "build": "rimraf dist && microbundle src/index.ts --format esm,cjs --sourcemap false --external react,react-dom,@tanstack/react-query,@regions-of-indonesia/client",
     "release": "release-it"
   },
   "repository": "https://github.com/regions-of-indonesia/react-query.git",
@@ -28,10 +28,14 @@
   "license": "GPL-3.0",
   "private": false,
   "dependencies": {
-    "@regions-of-indonesia/client": "^1.4.0",
-    "@tanstack/react-query": "^4.6.0"
+    "@regions-of-indonesia/client": "^2.0.0",
+    "@tanstack/react-query": "^4.6.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
     "@vitest/ui": "^0.23.2",
     "jsdom": "^20.0.0",
     "microbundle": "^0.15.1",
