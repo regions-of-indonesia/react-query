@@ -24,7 +24,7 @@
   "license": "GPL-3.0",
   "private": false,
   "dependencies": {
-    "@regions-of-indonesia/client": "^2.0.0",
+    "@regions-of-indonesia/client": "^2.1.0",
     "@tanstack/react-query": "^4.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
