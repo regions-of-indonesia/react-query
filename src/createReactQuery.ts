@@ -1,18 +1,18 @@
 import { RegionsOfIndonesiaClient } from "@regions-of-indonesia/client";
 
 import { useQuery } from "@tanstack/react-query";
-import type { QueryFunctionContext as Ctx } from "@tanstack/react-query";
+import type { QueryFunctionContext as Context } from "@tanstack/react-query";
 
-function isNotEmptyString(value: unknown): value is string {
-  return typeof value === "string" && value !== "";
+function getValidKey<T>(value: unknown, callback: (value: string) => T) {
+  return typeof value === "string" && value !== "" ? callback(value) : [];
 }
 
-function createCallbackIfNotEmptyStringOrNull<T>(value: unknown, callback: (value: string) => T) {
-  return isNotEmptyString(value) ? callback(value) : [];
-}
-
-function isValidTextOrCodeFromContext(ctx: Ctx<[string, string], any>) {
+function isContext(ctx: Context): ctx is Context<[string, string]> {
   return typeof ctx.queryKey[1] === "string" && ctx.queryKey[1] !== "";
+}
+
+async function error(): Promise<undefined> {
+  throw new Error("Oops");
 }
 
 function createReactQuery(client: RegionsOfIndonesiaClient = new RegionsOfIndonesiaClient()) {
@@ -34,31 +34,20 @@ function createReactQuery(client: RegionsOfIndonesiaClient = new RegionsOfIndone
   };
 
   const fetcher = {
-    provinces: async () => await client.province.find(),
-    province: async (ctx: Ctx<[string, string]>) =>
-      isValidTextOrCodeFromContext(ctx) ? await client.province.findByCode(ctx.queryKey[1]) : undefined,
-    districts: async (ctx: Ctx<[string, string]>) =>
-      isValidTextOrCodeFromContext(ctx) ? await client.district.findByProvinceCode(ctx.queryKey[1]) : undefined,
-    district: async (ctx: Ctx<[string, string]>) =>
-      isValidTextOrCodeFromContext(ctx) ? await client.district.findByCode(ctx.queryKey[1]) : undefined,
-    subdistricts: async (ctx: Ctx<[string, string]>) =>
-      isValidTextOrCodeFromContext(ctx) ? await client.subdistrict.findByDistrictCode(ctx.queryKey[1]) : undefined,
-    subdistrict: async (ctx: Ctx<[string, string]>) =>
-      isValidTextOrCodeFromContext(ctx) ? await client.subdistrict.findByCode(ctx.queryKey[1]) : undefined,
-    villages: async (ctx: Ctx<[string, string]>) =>
-      isValidTextOrCodeFromContext(ctx) ? await client.village.findBySubdistrictCode(ctx.queryKey[1]) : undefined,
-    village: async (ctx: Ctx<[string, string]>) =>
-      isValidTextOrCodeFromContext(ctx) ? await client.village.findByCode(ctx.queryKey[1]) : undefined,
+    provinces: () => client.province.find(),
+    province: (ctx: Context) => (isContext(ctx) ? client.province.findByCode(ctx.queryKey[1]) : error()),
+    districts: (ctx: Context) => (isContext(ctx) ? client.district.findByProvinceCode(ctx.queryKey[1]) : error()),
+    district: (ctx: Context) => (isContext(ctx) ? client.district.findByCode(ctx.queryKey[1]) : error()),
+    subdistricts: (ctx: Context) => (isContext(ctx) ? client.subdistrict.findByDistrictCode(ctx.queryKey[1]) : error()),
+    subdistrict: (ctx: Context) => (isContext(ctx) ? client.subdistrict.findByCode(ctx.queryKey[1]) : error()),
+    villages: (ctx: Context) => (isContext(ctx) ? client.village.findBySubdistrictCode(ctx.queryKey[1]) : error()),
+    village: (ctx: Context) => (isContext(ctx) ? client.village.findByCode(ctx.queryKey[1]) : error()),
 
-    search: async (ctx: Ctx<[string, string]>) => (isValidTextOrCodeFromContext(ctx) ? await client.search(ctx.queryKey[1]) : undefined),
-    searchProvinces: async (ctx: Ctx<[string, string]>) =>
-      isValidTextOrCodeFromContext(ctx) ? await client.province.search(ctx.queryKey[1]) : undefined,
-    searchDistricts: async (ctx: Ctx<[string, string]>) =>
-      isValidTextOrCodeFromContext(ctx) ? await client.district.search(ctx.queryKey[1]) : undefined,
-    searchSubdistricts: async (ctx: Ctx<[string, string]>) =>
-      isValidTextOrCodeFromContext(ctx) ? await client.subdistrict.search(ctx.queryKey[1]) : undefined,
-    searchVillages: async (ctx: Ctx<[string, string]>) =>
-      isValidTextOrCodeFromContext(ctx) ? await client.village.search(ctx.queryKey[1]) : undefined,
+    search: (ctx: Context) => (isContext(ctx) ? client.search(ctx.queryKey[1]) : error()),
+    searchProvinces: (ctx: Context) => (isContext(ctx) ? client.province.search(ctx.queryKey[1]) : error()),
+    searchDistricts: (ctx: Context) => (isContext(ctx) ? client.district.search(ctx.queryKey[1]) : error()),
+    searchSubdistricts: (ctx: Context) => (isContext(ctx) ? client.subdistrict.search(ctx.queryKey[1]) : error()),
+    searchVillages: (ctx: Context) => (isContext(ctx) ? client.village.search(ctx.queryKey[1]) : error()),
   };
 
   return {
@@ -66,41 +55,41 @@ function createReactQuery(client: RegionsOfIndonesiaClient = new RegionsOfIndone
       return useQuery(key.provinces, fetcher.provinces);
     },
     useProvince(code: string) {
-      return useQuery(createCallbackIfNotEmptyStringOrNull(code, key.province), fetcher.province);
+      return useQuery(getValidKey(code, key.province), fetcher.province);
     },
     useDistricts(provinceCode: string) {
-      return useQuery(createCallbackIfNotEmptyStringOrNull(provinceCode, key.districts), fetcher.districts);
+      return useQuery(getValidKey(provinceCode, key.districts), fetcher.districts);
     },
     useDistrict(code: string) {
-      return useQuery(createCallbackIfNotEmptyStringOrNull(code, key.district), fetcher.district);
+      return useQuery(getValidKey(code, key.district), fetcher.district);
     },
     useSubdistricts(districtCode: string) {
-      return useQuery(createCallbackIfNotEmptyStringOrNull(districtCode, key.subdistricts), fetcher.subdistricts);
+      return useQuery(getValidKey(districtCode, key.subdistricts), fetcher.subdistricts);
     },
     useSubdistrict(code: string) {
-      return useQuery(createCallbackIfNotEmptyStringOrNull(code, key.subdistrict), fetcher.subdistrict);
+      return useQuery(getValidKey(code, key.subdistrict), fetcher.subdistrict);
     },
     useVillages(subdistrictCode: string) {
-      return useQuery(createCallbackIfNotEmptyStringOrNull(subdistrictCode, key.villages), fetcher.villages);
+      return useQuery(getValidKey(subdistrictCode, key.villages), fetcher.villages);
     },
     useVillage(code: string) {
-      return useQuery(createCallbackIfNotEmptyStringOrNull(code, key.village), fetcher.village);
+      return useQuery(getValidKey(code, key.village), fetcher.village);
     },
 
     useSearch(text: string) {
-      return useQuery(createCallbackIfNotEmptyStringOrNull(text, key.search), fetcher.search);
+      return useQuery(getValidKey(text, key.search), fetcher.search);
     },
     useSearchProvinces(text: string) {
-      return useQuery(createCallbackIfNotEmptyStringOrNull(text, key.searchProvinces), fetcher.searchProvinces);
+      return useQuery(getValidKey(text, key.searchProvinces), fetcher.searchProvinces);
     },
     useSearchDistricts(text: string) {
-      return useQuery(createCallbackIfNotEmptyStringOrNull(text, key.searchDistricts), fetcher.searchDistricts);
+      return useQuery(getValidKey(text, key.searchDistricts), fetcher.searchDistricts);
     },
     useSearchSubdistricts(text: string) {
-      return useQuery(createCallbackIfNotEmptyStringOrNull(text, key.searchSubdistricts), fetcher.searchSubdistricts);
+      return useQuery(getValidKey(text, key.searchSubdistricts), fetcher.searchSubdistricts);
     },
     useSearchVillages(text: string) {
-      return useQuery(createCallbackIfNotEmptyStringOrNull(text, key.searchVillages), fetcher.searchVillages);
+      return useQuery(getValidKey(text, key.searchVillages), fetcher.searchVillages);
     },
   };
 }
