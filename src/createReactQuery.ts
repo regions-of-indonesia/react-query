@@ -3,93 +3,89 @@ import { RegionsOfIndonesiaClient } from "@regions-of-indonesia/client";
 import { useQuery } from "@tanstack/react-query";
 import type { QueryFunctionContext as Context } from "@tanstack/react-query";
 
+function isKey(value: unknown): value is string {
+  return typeof value === "string" && value !== "";
+}
+
 function getValidKey<T>(value: unknown, callback: (value: string) => T) {
-  return typeof value === "string" && value !== "" ? callback(value) : [];
-}
-
-function isContext(ctx: Context): ctx is Context<[string, string]> {
-  return typeof ctx.queryKey[1] === "string" && ctx.queryKey[1] !== "";
-}
-
-async function error(): Promise<undefined> {
-  throw new Error("Oops");
+  return isKey(value) ? callback(value) : ([] as unknown as [string, string]);
 }
 
 function createReactQuery(client: RegionsOfIndonesiaClient = new RegionsOfIndonesiaClient()) {
   const key = {
     provinces: ["provinces"],
-    province: (code: string) => ["province", code],
-    districts: (provinceCode: string) => ["districts", provinceCode],
-    district: (code: string) => ["district", code],
-    subdistricts: (districtCode: string) => ["subdistricts", districtCode],
-    subdistrict: (code: string) => ["subdistrict", code],
-    villages: (subdistrictCode: string) => ["villages", subdistrictCode],
-    village: (code: string) => ["village", code],
+    province: (code: string) => ["province", code] as [string, string],
+    districts: (provinceCode: string) => ["districts", provinceCode] as [string, string],
+    district: (code: string) => ["district", code] as [string, string],
+    subdistricts: (districtCode: string) => ["subdistricts", districtCode] as [string, string],
+    subdistrict: (code: string) => ["subdistrict", code] as [string, string],
+    villages: (subdistrictCode: string) => ["villages", subdistrictCode] as [string, string],
+    village: (code: string) => ["village", code] as [string, string],
 
-    search: (text: string) => ["search", text],
-    searchProvinces: (text: string) => ["search/provinces", text],
-    searchDistricts: (text: string) => ["search/districts", text],
-    searchSubdistricts: (text: string) => ["search/subdistricts", text],
-    searchVillages: (text: string) => ["search/villages", text],
+    search: (text: string) => ["search", text] as [string, string],
+    searchProvinces: (text: string) => ["search/provinces", text] as [string, string],
+    searchDistricts: (text: string) => ["search/districts", text] as [string, string],
+    searchSubdistricts: (text: string) => ["search/subdistricts", text] as [string, string],
+    searchVillages: (text: string) => ["search/villages", text] as [string, string],
   };
 
   const fetcher = {
     provinces: () => client.province.find(),
-    province: (ctx: Context) => (isContext(ctx) ? client.province.findByCode(ctx.queryKey[1]) : error()),
-    districts: (ctx: Context) => (isContext(ctx) ? client.district.findByProvinceCode(ctx.queryKey[1]) : error()),
-    district: (ctx: Context) => (isContext(ctx) ? client.district.findByCode(ctx.queryKey[1]) : error()),
-    subdistricts: (ctx: Context) => (isContext(ctx) ? client.subdistrict.findByDistrictCode(ctx.queryKey[1]) : error()),
-    subdistrict: (ctx: Context) => (isContext(ctx) ? client.subdistrict.findByCode(ctx.queryKey[1]) : error()),
-    villages: (ctx: Context) => (isContext(ctx) ? client.village.findBySubdistrictCode(ctx.queryKey[1]) : error()),
-    village: (ctx: Context) => (isContext(ctx) ? client.village.findByCode(ctx.queryKey[1]) : error()),
+    province: <C extends Context<[string, string]>>(ctx: C) => client.province.findByCode(ctx.queryKey[1]),
+    districts: <C extends Context<[string, string]>>(ctx: C) => client.district.findByProvinceCode(ctx.queryKey[1]),
+    district: <C extends Context<[string, string]>>(ctx: C) => client.district.findByCode(ctx.queryKey[1]),
+    subdistricts: <C extends Context<[string, string]>>(ctx: C) => client.subdistrict.findByDistrictCode(ctx.queryKey[1]),
+    subdistrict: <C extends Context<[string, string]>>(ctx: C) => client.subdistrict.findByCode(ctx.queryKey[1]),
+    villages: <C extends Context<[string, string]>>(ctx: C) => client.village.findBySubdistrictCode(ctx.queryKey[1]),
+    village: <C extends Context<[string, string]>>(ctx: C) => client.village.findByCode(ctx.queryKey[1]),
 
-    search: (ctx: Context) => (isContext(ctx) ? client.search(ctx.queryKey[1]) : error()),
-    searchProvinces: (ctx: Context) => (isContext(ctx) ? client.province.search(ctx.queryKey[1]) : error()),
-    searchDistricts: (ctx: Context) => (isContext(ctx) ? client.district.search(ctx.queryKey[1]) : error()),
-    searchSubdistricts: (ctx: Context) => (isContext(ctx) ? client.subdistrict.search(ctx.queryKey[1]) : error()),
-    searchVillages: (ctx: Context) => (isContext(ctx) ? client.village.search(ctx.queryKey[1]) : error()),
+    search: <C extends Context<[string, string]>>(ctx: C) => client.search(ctx.queryKey[1]),
+    searchProvinces: <C extends Context<[string, string]>>(ctx: C) => client.province.search(ctx.queryKey[1]),
+    searchDistricts: <C extends Context<[string, string]>>(ctx: C) => client.district.search(ctx.queryKey[1]),
+    searchSubdistricts: <C extends Context<[string, string]>>(ctx: C) => client.subdistrict.search(ctx.queryKey[1]),
+    searchVillages: <C extends Context<[string, string]>>(ctx: C) => client.village.search(ctx.queryKey[1]),
   };
 
   return {
     useProvinces() {
       return useQuery(key.provinces, fetcher.provinces);
     },
-    useProvince(code: string) {
-      return useQuery(getValidKey(code, key.province), fetcher.province);
+    useProvince(code?: string) {
+      return useQuery(getValidKey(code, key.province), fetcher.province, { enabled: isKey(code) });
     },
-    useDistricts(provinceCode: string) {
-      return useQuery(getValidKey(provinceCode, key.districts), fetcher.districts);
+    useDistricts(provinceCode?: string) {
+      return useQuery(getValidKey(provinceCode, key.districts), fetcher.districts, { enabled: isKey(provinceCode) });
     },
-    useDistrict(code: string) {
-      return useQuery(getValidKey(code, key.district), fetcher.district);
+    useDistrict(code?: string) {
+      return useQuery(getValidKey(code, key.district), fetcher.district, { enabled: isKey(code) });
     },
-    useSubdistricts(districtCode: string) {
-      return useQuery(getValidKey(districtCode, key.subdistricts), fetcher.subdistricts);
+    useSubdistricts(districtCode?: string) {
+      return useQuery(getValidKey(districtCode, key.subdistricts), fetcher.subdistricts, { enabled: isKey(districtCode) });
     },
-    useSubdistrict(code: string) {
-      return useQuery(getValidKey(code, key.subdistrict), fetcher.subdistrict);
+    useSubdistrict(code?: string) {
+      return useQuery(getValidKey(code, key.subdistrict), fetcher.subdistrict, { enabled: isKey(code) });
     },
-    useVillages(subdistrictCode: string) {
-      return useQuery(getValidKey(subdistrictCode, key.villages), fetcher.villages);
+    useVillages(subdistrictCode?: string) {
+      return useQuery(getValidKey(subdistrictCode, key.villages), fetcher.villages, { enabled: isKey(subdistrictCode) });
     },
-    useVillage(code: string) {
-      return useQuery(getValidKey(code, key.village), fetcher.village);
+    useVillage(code?: string) {
+      return useQuery(getValidKey(code, key.village), fetcher.village, { enabled: isKey(code) });
     },
 
-    useSearch(text: string) {
-      return useQuery(getValidKey(text, key.search), fetcher.search);
+    useSearch(text?: string) {
+      return useQuery(getValidKey(text, key.search), fetcher.search, { enabled: isKey(text) });
     },
-    useSearchProvinces(text: string) {
-      return useQuery(getValidKey(text, key.searchProvinces), fetcher.searchProvinces);
+    useSearchProvinces(text?: string) {
+      return useQuery(getValidKey(text, key.searchProvinces), fetcher.searchProvinces, { enabled: isKey(text) });
     },
-    useSearchDistricts(text: string) {
-      return useQuery(getValidKey(text, key.searchDistricts), fetcher.searchDistricts);
+    useSearchDistricts(text?: string) {
+      return useQuery(getValidKey(text, key.searchDistricts), fetcher.searchDistricts, { enabled: isKey(text) });
     },
-    useSearchSubdistricts(text: string) {
-      return useQuery(getValidKey(text, key.searchSubdistricts), fetcher.searchSubdistricts);
+    useSearchSubdistricts(text?: string) {
+      return useQuery(getValidKey(text, key.searchSubdistricts), fetcher.searchSubdistricts, { enabled: isKey(text) });
     },
-    useSearchVillages(text: string) {
-      return useQuery(getValidKey(text, key.searchVillages), fetcher.searchVillages);
+    useSearchVillages(text?: string) {
+      return useQuery(getValidKey(text, key.searchVillages), fetcher.searchVillages, { enabled: isKey(text) });
     },
   };
 }
