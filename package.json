@@ -2,6 +2,7 @@
   "name": "@regions-of-indonesia/react-query",
   "version": "1.2.2",
   "description": "Regions of Indonesia React Query",
+  "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "module": "./dist/index.modern.mjs",
@@ -24,20 +25,22 @@
   "license": "GPL-3.0",
   "private": false,
   "dependencies": {
-    "@regions-of-indonesia/client": "^2.2.0",
-    "@tanstack/react-query": "^4.18.0",
+    "@regions-of-indonesia/client": "^3.0.0",
+    "@tanstack/react-query": "^5.0.0-alpha.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.21",
+    "@testing-library/react": "^14.0.0",
+    "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.6",
-    "@vitest/ui": "^0.23.2",
+    "@vitejs/plugin-react": "^3.1.0",
+    "@vitest/ui": "^0.29.7",
     "javascript-yesterday": "^1.2.0",
-    "jsdom": "^20.0.0",
+    "jsdom": "^21.1.1",
     "microbundle": "^0.15.1",
-    "node-fetch": "^3.2.10",
-    "release-it": "^15.4.2",
-    "vitest": "^0.23.2"
+    "node-fetch": "^3.3.1",
+    "release-it": "^15.9.0",
+    "vitest": "^0.29.7"
   }
 }
