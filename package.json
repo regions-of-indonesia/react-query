@@ -24,6 +24,21 @@
   "author": "flamrdevs <flamrdevs@gmail.com>",
   "license": "GPL-3.0",
   "private": false,
+  "keywords": [
+    "api",
+    "library",
+    "open-source",
+    "javascript",
+    "typescript",
+    "indonesia",
+    "region",
+    "daerah",
+    "wilayah",
+    "wilayah-indonesia",
+    "regions-of-indonesia",
+    "react",
+    "react-query"
+  ],
   "dependencies": {
     "@regions-of-indonesia/client": "^3.0.0",
     "@tanstack/react-query": "^5.0.0-alpha.7",
