@@ -1,6 +1,6 @@
 {
   "name": "@regions-of-indonesia/react-query",
-  "version": "2.5.1",
+  "version": "4.0.0",
   "description": "Regions of Indonesia React Query",
   "type": "module",
   "main": "./dist/index.js",
