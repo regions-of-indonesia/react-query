@@ -39,22 +39,26 @@
     "react",
     "react-query"
   ],
-  "dependencies": {
-    "@regions-of-indonesia/client": "^3.0.0",
-    "@tanstack/react-query": "^5.0.0-alpha.7",
+  "peerDependencies": {
+    "@regions-of-indonesia/client": "^4.0.0",
+    "@tanstack/react-query": "^5.0.0-alpha.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@regions-of-indonesia/client": "^4.0.0",
+    "@tanstack/react-query": "^5.0.0-alpha.12",
     "@testing-library/react": "^14.0.0",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.6",
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
     "@vitest/ui": "^0.29.7",
     "javascript-yesterday": "^1.2.0",
     "jsdom": "^21.1.1",
     "microbundle": "^0.15.1",
     "node-fetch": "^3.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "release-it": "^15.9.0",
     "vitest": "^0.29.7"
   }

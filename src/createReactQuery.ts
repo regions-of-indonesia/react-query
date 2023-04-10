@@ -1,4 +1,4 @@
-import { RegionsOfIndonesiaClient } from "@regions-of-indonesia/client";
+import { create } from "@regions-of-indonesia/client";
 
 import { useQuery } from "@tanstack/react-query";
 import type { QueryFunctionContext as Context } from "@tanstack/react-query";
@@ -10,7 +10,7 @@ const iskey = (value: unknown): value is string => typeof value === "string" && 
 
 const initial = <QK, QF>(queryKey: QK, queryFn: QF, enabled?: boolean) => ({ queryKey, queryFn, enabled });
 
-const createReactQuery = (client: RegionsOfIndonesiaClient = new RegionsOfIndonesiaClient(), options: { name?: string } = {}) => {
+const createReactQuery = (client: ReturnType<typeof create> = create(), options: { name?: string } = {}) => {
   const { name = "regions-of-indonesia" } = options,
     named = (value: string) => (typeof name === "string" ? [name, value].join("/") : value),
     keyname = {
@@ -47,13 +47,13 @@ const createReactQuery = (client: RegionsOfIndonesiaClient = new RegionsOfIndone
     },
     fetcher = {
       ps: () => client.province.find(),
-      p: <C extends Context<QueryKey>>(ctx: C) => client.province.findByCode(ctx.queryKey[1]),
-      ds: <C extends Context<QueryKey>>(ctx: C) => client.district.findByProvinceCode(ctx.queryKey[1]),
-      d: <C extends Context<QueryKey>>(ctx: C) => client.district.findByCode(ctx.queryKey[1]),
-      ss: <C extends Context<QueryKey>>(ctx: C) => client.subdistrict.findByDistrictCode(ctx.queryKey[1]),
-      s: <C extends Context<QueryKey>>(ctx: C) => client.subdistrict.findByCode(ctx.queryKey[1]),
-      vs: <C extends Context<QueryKey>>(ctx: C) => client.village.findBySubdistrictCode(ctx.queryKey[1]),
-      v: <C extends Context<QueryKey>>(ctx: C) => client.village.findByCode(ctx.queryKey[1]),
+      p: <C extends Context<QueryKey>>(ctx: C) => client.province.find.by(ctx.queryKey[1]),
+      ds: <C extends Context<QueryKey>>(ctx: C) => client.district.find(ctx.queryKey[1]),
+      d: <C extends Context<QueryKey>>(ctx: C) => client.district.find.by(ctx.queryKey[1]),
+      ss: <C extends Context<QueryKey>>(ctx: C) => client.subdistrict.find(ctx.queryKey[1]),
+      s: <C extends Context<QueryKey>>(ctx: C) => client.subdistrict.find.by(ctx.queryKey[1]),
+      vs: <C extends Context<QueryKey>>(ctx: C) => client.village.find(ctx.queryKey[1]),
+      v: <C extends Context<QueryKey>>(ctx: C) => client.village.find.by(ctx.queryKey[1]),
 
       f: <C extends Context<QueryKey>>(ctx: C) => client.search(ctx.queryKey[1]),
       fP: <C extends Context<QueryKey>>(ctx: C) => client.province.search(ctx.queryKey[1]),
@@ -80,4 +80,4 @@ const createReactQuery = (client: RegionsOfIndonesiaClient = new RegionsOfIndone
   };
 };
 
-export default createReactQuery;
+export { createReactQuery };

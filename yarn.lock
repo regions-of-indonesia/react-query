@@ -1467,10 +1467,10 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@regions-of-indonesia/client@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@regions-of-indonesia/client/-/client-3.0.0.tgz#052111d98fd6cc036fb90bd5448798c346318210"
-  integrity sha512-TXhqLDiOmnOKJeBLdi6th3db/WwOdwV6a2NBFAppA+GmqC2Mgp5h+0kW0Km4VcIibuulw6W9VOd7RHGFCmYsWw==
+"@regions-of-indonesia/client@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@regions-of-indonesia/client/-/client-4.0.0.tgz#bb0d332c47045cd70d3a0c7330517ac91892b59b"
+  integrity sha512-msMXj2ep2mZ5T5YfHohQLa1nWJUHUGNh3krbi5rURYxmYgqQZLslRnasmHS8Pb0MI+Vcvd/6Bxasm9L0ZkFzVQ==
 
 "@rollup/plugin-alias@^3.1.1":
   version "3.1.9"
@@ -1558,17 +1558,17 @@
   dependencies:
     defer-to-connect "^2.0.1"
 
-"@tanstack/query-core@5.0.0-alpha.7":
-  version "5.0.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.0.0-alpha.7.tgz#cb3db915b62a61ad803076a140a31e7946dcc791"
-  integrity sha512-f71aMnoHPDg2EvOIOcTovJ/dvgt/5h9YiPrQ2pvLNDK43XzgTvxyNdukSKB5x4Hrsuf8p9tkYdrncGrbrQhRwQ==
+"@tanstack/query-core@5.0.0-alpha.12":
+  version "5.0.0-alpha.12"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.0.0-alpha.12.tgz#be9596f234e831c627c9d17f2eda2ab213550d99"
+  integrity sha512-kd53UD6pasczOQ0Y+59Ku0Ep3W+7qjjhxnn2PGIEqioqa4g27Vnt77yTb8SwrXQR92ugazGpjOsGylDtwh31QA==
 
-"@tanstack/react-query@^5.0.0-alpha.7":
-  version "5.0.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.0.0-alpha.7.tgz#f3969f735c834556be1abc41de689de497a828a7"
-  integrity sha512-9L8gqvW2jKaXS64O2ZayD4VpIOr1M2QlWwT6hLMF675bEmhEZ2uFHPMz0E8GarY8+riSiuEHFdnra6hkcDf4Zg==
+"@tanstack/react-query@^5.0.0-alpha.12":
+  version "5.0.0-alpha.12"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.0.0-alpha.12.tgz#7e449118733affcecae7d9e233ff0a53e9dbef93"
+  integrity sha512-aiAHqq+G2+I+x3PGhQU1q/SHxoQZcOp8cB40qPR/UMvMC5wLPH3fX28AT1U3bQlfsrzt1+BZWqqoVPq4db5EqA==
   dependencies:
-    "@tanstack/query-core" "5.0.0-alpha.7"
+    "@tanstack/query-core" "5.0.0-alpha.12"
 
 "@testing-library/dom@^9.0.0":
   version "9.0.1"
@@ -1660,17 +1660,10 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
 
-"@types/react-dom@^18.0.0":
+"@types/react-dom@^18.0.0", "@types/react-dom@^18.0.11":
   version "18.0.11"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.11.tgz#321351c1459bc9ca3d216aefc8a167beec334e33"
   integrity sha512-O38bPbI2CWtgw/OoQoY+BRelw7uysmXbWvw3nLWO21H1HSh+GOlqPuXshJfjmpNlKiiSDG9cc1JZAaMmVdcTlw==
-  dependencies:
-    "@types/react" "*"
-
-"@types/react-dom@^18.0.6":
-  version "18.0.6"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.6.tgz#36652900024842b74607a17786b6662dd1e103a1"
-  integrity sha512-/5OFZgfIPSwy+YuIBP/FgJnQnsxhZhjjrnxudMddeblOouIodEQ75X14Rr4wGSG/bknL+Omy9iWlLo1u/9GzAA==
   dependencies:
     "@types/react" "*"
 
@@ -1683,10 +1676,10 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@^18.0.28":
-  version "18.0.28"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.28.tgz#accaeb8b86f4908057ad629a26635fe641480065"
-  integrity sha512-RD0ivG1kEztNBdoAK7lekI9M+azSnitIn85h4iOiaLjaTrMjzslhaqCGaI4IyCJ1RljWiLCEu4jyrLLgqxBTew==
+"@types/react@^18.0.33":
+  version "18.0.33"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.33.tgz#a1575160cb4376787c2f5fe0312302f824baa61e"
+  integrity sha512-sHxzVxeanvQyQ1lr8NSHaj0kDzcNiGpILEVt69g9S31/7PfMvNCKLKcsHw4lYKjs3cGNJjXSP4mYzX43QlnjNA==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
