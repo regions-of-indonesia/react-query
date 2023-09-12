@@ -11,8 +11,8 @@ devDependencies:
     specifier: ^5.1.0
     version: 5.1.0
   '@tanstack/react-query':
-    specifier: 5.0.0-beta.16
-    version: 5.0.0-beta.16(react-dom@18.2.0)(react@18.2.0)
+    specifier: 5.0.0-beta.25
+    version: 5.0.0-beta.25(react-dom@18.2.0)(react@18.2.0)
   '@testing-library/react':
     specifier: ^14.0.0
     version: 14.0.0(react-dom@18.2.0)(react@18.2.0)
@@ -879,12 +879,12 @@ packages:
       defer-to-connect: 2.0.1
     dev: true
 
-  /@tanstack/query-core@5.0.0-beta.15:
-    resolution: {integrity: sha512-NaL5qp1K5IhnDD5wEegYpXB0OMPsb+QZNcGR5hWQaDS+30Ga8+zKpfjDn7wHlCKPO2mHCTRqUbQnLWIlt5FKoQ==}
+  /@tanstack/query-core@5.0.0-beta.23:
+    resolution: {integrity: sha512-Qp+U4EltOl7y8VZIhxy4eZR5xFnXll28Urp28e6ag10D69yYKRApS2O+ufcVCxOcm1GFv4rpp19gYrpoqHeWgA==}
     dev: true
 
-  /@tanstack/react-query@5.0.0-beta.16(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-60/jq4W4A4kG4Yk18SjpXa3BnzIFCP3kt12u54Vtc/ul7ZIcs18Hvj02UVddfEWAw3rL3er8ez92pqaNYSVeBw==}
+  /@tanstack/react-query@5.0.0-beta.25(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-xyO1VeiOqv7kIfyY8NH76L4qIWN6qq+oOrZY1XE1dt4Jcc3paKiJDK2V7hf3iWuO1qnBz10E4mqV3jnepj+x0g==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
@@ -895,7 +895,7 @@ packages:
       react-native:
         optional: true
     dependencies:
-      '@tanstack/query-core': 5.0.0-beta.15
+      '@tanstack/query-core': 5.0.0-beta.23
       client-only: 0.0.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
