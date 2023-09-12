@@ -32,6 +32,10 @@
     "build": "vite build",
     "release": "pnpm test && pnpm build && release-it"
   },
+  "peerDependencies": {
+    "@regions-of-indonesia/client": "5.2.0",
+    "@tanstack/react-query": "5.0.0-beta.16"
+  },
   "devDependencies": {
     "@regions-of-indonesia/client": "5.2.0",
     "@regions-of-indonesia/types": "5.1.0",
