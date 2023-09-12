@@ -1,3 +1,4 @@
+export type * from "@regions-of-indonesia/types";
 import type { Client } from "@regions-of-indonesia/client";
 
 import { useQuery } from "@tanstack/react-query";
