@@ -9,6 +9,11 @@ type QueryKey = string[];
 const isCode = (value: unknown) => typeof value === "string" && value !== "";
 const isName = (value: unknown) => typeof value === "string" && value !== "";
 
+/**
+ *
+ * @param client Regions of Indonesia client
+ * @returns hooks
+ */
 const create = (client: Client) => {
   const name = "regions-of-indonesia";
 
