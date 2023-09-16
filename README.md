@@ -37,3 +37,5 @@
 ## License
 
 [GPL-3.0](https://github.com/regions-of-indonesia/react-query/blob/main/LICENSE)
+
+<img width="100%" src="https://hiiiits.deno.dev/hit/regions-of-indonesia/react-query" alt="hiiiits" title="hiiiits" />
